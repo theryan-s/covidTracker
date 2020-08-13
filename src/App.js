@@ -130,10 +130,6 @@ class App extends Component {
               < CountryCards covidCountryData = {this.state.countryData}/>
               : <p>Please input a country!</p> 
             }
-            {/* {this.state.isSearchLoaded ?
-              < Chart covidGlobalData = {this.state.globalData} covidCountryData = {this.state.countryData} covidCountryName = {this.state.countryText}/>
-              : null
-            } */}
           </div>
           < Footer />
         </div> 
