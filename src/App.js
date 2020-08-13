@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import Cards from './Components/Cards';
+import Cards from './Components/Cards/Cards';
+import CountryCards from './Components/Cards/CountryCards';
+import Chart from './Components/Chart/Chart';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Footer from './Components/Footer/Footer'
 import './App.scss';
 import axios from 'axios';
 
@@ -7,9 +13,14 @@ class App extends Component {
   constructor(){
         super();
         this.state = {
-          data: {},
+          globalData: {},
+          countryData: {},
           country: '',
-          countryFound: false
+          countryFound: false,
+          countryText: '',
+          isLoaded: false,
+          isSearchLoaded: false,
+          chartData: {}
         }
     }
 
@@ -27,12 +38,13 @@ class App extends Component {
           console.log(res)
 
           this.setState({
-            data: {
+            globalData: {
               confirmed: globalConfirmed, 
               recovered: globalRecovered, 
               deaths: globalDeaths,
               date: lastUpdatedDate
-            }
+            },
+            isLoaded: true,
           })
 
         })
@@ -61,50 +73,69 @@ class App extends Component {
         const countriesArray = res.data.Countries;
 
         for (let i = 0; i < countriesArray.length; i++){
-          if (countriesArray[i].Country === this.state.country){
+          if (countriesArray[i].Country.toLowerCase() === this.state.country.toLowerCase()){
             console.log(countriesArray[i].TotalConfirmed);
             this.setState({
-              data: {
-                confirmed: countriesArray[i].TotalConfirmed,
-                recovered: countriesArray[i].TotalRecovered,
-                deaths: countriesArray[i].TotalDeaths,
+              countryData: {
+                countryConfirmed: countriesArray[i].TotalConfirmed,
+                countryRecovered: countriesArray[i].TotalRecovered,
+                countryDeaths: countriesArray[i].TotalDeaths,
                 date: countriesArray[i].Date
               },
               countryFound: true,
+              countryText: countriesArray[i].Country,
+              isSearchLoaded: true
             })
-            console.log(this.state);
           }
         }
-
         if (this.state.countryFound === false){
           alert("Please try another country!")
         }
-
-        // this.setState({
-        //   country: ''
-        // })
+        this.setState({
+          country: '',
+        })
       })
-      
     }
-
+    
 
   render(){
+
+    //MATERIALUI STYLING
+    const useStyles = makeStyles((theme) => ({
+      root: {
+        '& > *': {
+          margin: theme.spacing(1),
+          width: '25ch',
+        },
+      },
+    }));
+
+    
       return (
+        
         <div className = "App">
           <div className="row">
-            <h1>Covid Tracker</h1>              
-
-            < Cards covidData = {this.state.data}/>
-  
-            <form onSubmit={ this.handleSubmit }>
-              <label>
-              <input type="text" value={this.state.country} onChange = {this.handleChange} placeholder="Search Country..."/>
-              </label>
-              <button type="submit">Search</button>
+            <h1>Covid Tracker</h1>    
+            {this.state.isLoaded ? 
+              < Cards covidGlobalData = {this.state.globalData}/>
+              : <p>loading...</p>
+            }       
+            <form className = "formContainer" onSubmit={ this.handleSubmit }>
+              <TextField className = "input" id="filled-basic" label="Country" variant="filled" type="text" value={this.state.country} onChange = {this.handleChange} placeholder="Search Country..."/>
+              <Button className="button" variant="contained" size="large" color="primary" type="submit">Search</Button>
             </form>
-            <h2>{this.state.country}</h2>
+            <h2>{this.state.countryText}</h2>
+            {this.state.isSearchLoaded ?
+              < CountryCards covidCountryData = {this.state.countryData}/>
+              : <p>Please input a country!</p> 
+            }
+            {this.state.isSearchLoaded ?
+              < Chart covidGlobalData = {this.state.globalData} covidCountryData = {this.state.countryData} covidCountryName = {this.state.countryText}/>
+              : null
+            }
           </div>
-        </div>
+          < Footer />
+        </div> 
       );
     }
 }
