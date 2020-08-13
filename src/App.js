@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Cards from './Components/Cards/Cards';
 import CountryCards from './Components/Cards/CountryCards';
-import Chart from './Components/Chart/Chart';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Footer from './Components/Footer/Footer'
@@ -20,7 +18,6 @@ class App extends Component {
           countryText: '',
           isLoaded: false,
           isSearchLoaded: false,
-          chartData: {}
         }
     }
 
@@ -35,7 +32,6 @@ class App extends Component {
           const globalRecovered = res.data.Global.TotalRecovered;
           const globalDeaths = res.data.Global.TotalDeaths;
           const lastUpdatedDate = res.data.Date;
-          console.log(res)
 
           this.setState({
             globalData: {
@@ -99,20 +95,7 @@ class App extends Component {
     
 
   render(){
-
-    //MATERIALUI STYLING
-    const useStyles = makeStyles((theme) => ({
-      root: {
-        '& > *': {
-          margin: theme.spacing(1),
-          width: '25ch',
-        },
-      },
-    }));
-
-    
       return (
-        
         <div className = "App">
           <div className="row">
             <h1>Covid Tracker</h1>    
