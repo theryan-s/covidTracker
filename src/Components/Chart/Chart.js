@@ -1,12 +1,12 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-import './chart.scss';
+import '../../App.scss';
 
-const Chart = ({covidGlobalData: { confirmed, recovered, deaths},  covidCountryData : { countryConfirmed, countryRecovered, countryDeaths}, covidCountryName: { countryText } }) => {
+const Chart = ({covidGlobalData: { confirmed, recovered, deaths },  covidCountryData : { countryConfirmed, countryRecovered, countryDeaths}, covidCountryName: { countryText }}) => {
     const barChart = (
         <Bar
             data={{
-                labels: ['Infected', 'Recovered', 'Deaths'],
+                labels: ['Confirmed', 'Recovered', 'Deaths'],
                 datasets: [
                     {
                         label: 'Global Status',
@@ -14,7 +14,7 @@ const Chart = ({covidGlobalData: { confirmed, recovered, deaths},  covidCountryD
                         data: [confirmed, recovered, deaths],
                     },
                     {
-                        label: `${countryText}`,
+                        label: `{$countryText}`,
                         backgroundColor: ['#267cc2', '#16761b', '#961717'],
                         data: [countryConfirmed, countryRecovered, countryDeaths]
                     }
@@ -22,7 +22,27 @@ const Chart = ({covidGlobalData: { confirmed, recovered, deaths},  covidCountryD
             }}
             options={{
                 legend: { display: false },
-                title: { display: true, text: `Global state vs ${ countryText }` },
+                title: { display: true, text: `Global state vs $covidCountryName}` },
+                // scales: {
+                //     yAxes: [
+                //             {
+                //             ticks: {
+                //                 fontSize: 20,
+                //                 max: {confirmed},
+                //                 min: 0,
+                //                 stepSize: 100000
+                //             }
+                //         }
+                //     ],
+                //     xAxes: [
+                //             {
+                //             ticks: {
+                //                 fontSize: 20
+                //             }
+                //         }
+                //     ]
+                // }
+            
             }}
         />
     );

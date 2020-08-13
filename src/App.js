@@ -121,18 +121,19 @@ class App extends Component {
               : <p>loading...</p>
             }       
             <form className = "formContainer" onSubmit={ this.handleSubmit }>
-              <TextField className = "input" id="filled-basic" label="Country" variant="filled" type="text" value={this.state.country} onChange = {this.handleChange} placeholder="Search Country..."/>
-              <Button className="button" variant="contained" size="large" color="primary" type="submit">Search</Button>
+              <TextField className = "input" id="standard-basic" label="Country" inputProps={{style: {fontSize: 18}}} InputLabelProps={{style: {fontSize: 18}}} type="text" value={this.state.country} onChange = {this.handleChange} placeholder="Search Country"/>
+              
+              <Button className="button" variant="contained" size="medium" color="primary" style={{ fontSize: '20px'}} type="submit">Search</Button>
             </form>
             <h2>{this.state.countryText}</h2>
             {this.state.isSearchLoaded ?
               < CountryCards covidCountryData = {this.state.countryData}/>
               : <p>Please input a country!</p> 
             }
-            {this.state.isSearchLoaded ?
+            {/* {this.state.isSearchLoaded ?
               < Chart covidGlobalData = {this.state.globalData} covidCountryData = {this.state.countryData} covidCountryName = {this.state.countryText}/>
               : null
-            }
+            } */}
           </div>
           < Footer />
         </div> 
