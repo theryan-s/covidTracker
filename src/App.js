@@ -19,7 +19,6 @@ class App extends Component {
           countryText: '',
           isLoaded: false,
           isSearchLoaded: false,
-          chartData: {}
         }
     }
 
@@ -34,7 +33,6 @@ class App extends Component {
           const globalRecovered = res.data.Global.TotalRecovered;
           const globalDeaths = res.data.Global.TotalDeaths;
           const lastUpdatedDate = res.data.Date;
-          console.log(res)
 
           this.setState({
             globalData: {
