@@ -1,28 +1,44 @@
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
-import './chart.scss';
+import { Pie } from 'react-chartjs-2';
+import '../../App.scss';
 
-const Chart = ({covidGlobalData: { confirmed, recovered, deaths},  covidCountryData : { countryConfirmed, countryRecovered, countryDeaths}, covidCountryName: { countryText } }) => {
+const Chart = ({covidGlobalData: { confirmed, recovered, deaths},  covidCountryData : { countryConfirmed, countryRecovered, countryDeaths}}) => {
+    const globalActiveCases = confirmed - recovered - deaths;
+    const countryActiveCases = countryConfirmed - countryRecovered - countryDeaths;
+
     const barChart = (
-        <Bar
+        <Pie
             data={{
-                labels: ['Infected', 'Recovered', 'Deaths'],
+                labels: ['Active', 'Recovered', 'Deaths'],
                 datasets: [
                     {
                         label: 'Global Status',
                         backgroundColor: ['#a6d4fa90', '#81c78490', '#e5737390'],
-                        data: [confirmed, recovered, deaths],
+                        data: [globalActiveCases, recovered, deaths],
                     },
-                    {
-                        label: `${countryText}`,
-                        backgroundColor: ['#267cc2', '#16761b', '#961717'],
-                        data: [countryConfirmed, countryRecovered, countryDeaths]
-                    }
             ],
             }}
             options={{
                 legend: { display: false },
-                title: { display: true, text: `Global state vs ${ countryText }` },
+                title: { display: true, text: `Global State` },
+            }}
+        />
+    );
+
+    const countryChart = (
+        <Pie
+            data={{
+                labels: ['Active', 'Recovered', 'Deaths'],
+                datasets: [
+                    {
+                        backgroundColor: ['#267cc290', '#16761b90', '#96171790'],
+                        data: [countryActiveCases, countryRecovered, countryDeaths]
+                    },
+                ],
+            }}
+            options={{
+                legend: { display: false },
+                title: { display: true, text: `Country State` },
             }}
         />
     );
@@ -30,6 +46,7 @@ const Chart = ({covidGlobalData: { confirmed, recovered, deaths},  covidCountryD
     return(
         <div className="chart">
             {barChart}
+            {countryChart}
         </div>
     )
 }
