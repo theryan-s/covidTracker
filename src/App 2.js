@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cards from './Components/Cards/Cards';
 import CountryCards from './Components/Cards/CountryCards';
 import Chart from './Components/Chart/Chart';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Footer from './Components/Footer/Footer'
@@ -19,6 +20,7 @@ class App extends Component {
           countryText: '',
           isLoaded: false,
           isSearchLoaded: false,
+          chartData: {}
         }
     }
 
@@ -33,6 +35,7 @@ class App extends Component {
           const globalRecovered = res.data.Global.TotalRecovered;
           const globalDeaths = res.data.Global.TotalDeaths;
           const lastUpdatedDate = res.data.Date;
+          console.log(res)
 
           this.setState({
             globalData: {
@@ -69,9 +72,9 @@ class App extends Component {
       }).then((res) => {
         const countriesArray = res.data.Countries;
 
-        //Loop through all arrays of data in API to check user input equates to country available
         for (let i = 0; i < countriesArray.length; i++){
           if (countriesArray[i].Country.toLowerCase() === this.state.country.toLowerCase()){
+            console.log(countriesArray[i].TotalConfirmed);
             this.setState({
               countryData: {
                 countryConfirmed: countriesArray[i].TotalConfirmed,
@@ -96,32 +99,46 @@ class App extends Component {
     
 
   render(){
-    return (
-      <div className = "app">
-        <div className="row">
-          <h1>Covid Tracker</h1>    
-          {this.state.isLoaded ? 
-            < Cards covidGlobalData = {this.state.globalData}/>
-            : <p>loading...</p>
-          }       
-          <form className = "formContainer" onSubmit={ this.handleSubmit }>
-            <TextField className = "input" id="filled-basic" label="Country" variant="filled" type="text" value={this.state.country} onChange = {this.handleChange} placeholder="Search Country..."/>
-            <Button className="button" variant="contained" size="large" color="primary" type="submit">Search</Button>
-          </form>
-          <h2>{this.state.countryText}</h2>
-          {this.state.isSearchLoaded ?
-            < CountryCards covidCountryData = {this.state.countryData}/>
-            : <p>Please input a country!</p> 
-          }
-          {this.state.isSearchLoaded ?
-            < Chart covidGlobalData = {this.state.globalData} covidCountryData = {this.state.countryData}/>
-            : null
-          }
-        </div>
-        < Footer />
-      </div> 
-    );
-  }
+
+    //MATERIALUI STYLING
+    const useStyles = makeStyles((theme) => ({
+      root: {
+        '& > *': {
+          margin: theme.spacing(1),
+          width: '25ch',
+        },
+      },
+    }));
+
+    
+      return (
+        
+        <div className = "App">
+          <div className="row">
+            <h1>Covid Tracker</h1>    
+            {this.state.isLoaded ? 
+              < Cards covidGlobalData = {this.state.globalData}/>
+              : <p>loading...</p>
+            }       
+            <form className = "formContainer" onSubmit={ this.handleSubmit }>
+              <TextField className = "input" id="filled-basic" label="Country" variant="filled" type="text" value={this.state.country} onChange = {this.handleChange} placeholder="Search Country..."/>
+              <Button className="button" variant="contained" size="large" color="primary" type="submit">Search</Button>
+            </form>
+            <h2>{this.state.countryText}</h2>
+            {this.state.isSearchLoaded ?
+              < CountryCards covidCountryData = {this.state.countryData}/>
+              : <p>Please input a country!</p> 
+            }
+            {this.state.isSearchLoaded ?
+              < Chart covidGlobalData = {this.state.globalData} covidCountryData = {this.state.countryData} covidCountryName = {this.state.countryText}/>
+              : null
+            }
+          </div>
+          < Footer />
+        </div> 
+      );
+    }
+}
 
 
 export default App;

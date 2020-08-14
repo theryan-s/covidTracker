@@ -3,7 +3,11 @@ import '../../App.scss';
 
 const Footer = () =>{
     return(
-        <div className="footer">Created by Ryan Shao &copy; 2020</div>
+        <footer>
+            <p>
+                Created by Ryan Shao &copy; 2020
+            </p>
+        </footer>
     )           
 }
 
