@@ -5,7 +5,7 @@ const Footer = () =>{
     return(
         <footer>
             <p>
-                Created by Ryan Shao &copy; 2020
+                Ryan Shao &copy; 2020
             </p>
         </footer>
     )           
