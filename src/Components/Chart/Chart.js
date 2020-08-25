@@ -45,8 +45,12 @@ const Chart = ({covidGlobalData: { confirmed, recovered, deaths},  covidCountryD
     
     return(
         <div className="chart">
-            {barChart}
-            {countryChart}
+            <div className="chartGlobal">
+                {barChart}
+            </div>
+            <div className="chartCountry">   
+                {countryChart}
+            </div>
         </div>
     )
 }

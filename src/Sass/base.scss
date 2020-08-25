@@ -79,3 +79,17 @@ h2{
   flex-direction: column;
   justify-content: space-between;
 }
+
+.chart{
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.chartGlobal{
+  width: 40%;
+}
+
+.chartCountry{
+  width: 40%;
+}
