@@ -16,19 +16,22 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
 
 html{
   font-size: 62.5%;
-  height: 100vh;
+  height: 100%;
   position: relative;
 }
 
 body{
-  background: linear-gradient(rgba(255, 255, 255, 0.481), rgba(255, 255, 255, 0.769)),url("../assets/imageedit_3_2303345666.jpg");
+  background: linear-gradient(rgba(255, 255, 255, 0.481), rgba(255, 255, 255, 0.769));
   background-size: cover;
-  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
   margin: 0 auto;
   font-family: "Nunito Sans", sans-serif;
   font-size: 3rem;
   text-transform: uppercase;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 img{
