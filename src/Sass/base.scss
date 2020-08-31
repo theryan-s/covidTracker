@@ -21,6 +21,9 @@ html{
 }
 
 body{
+  background: linear-gradient(rgba(255, 255, 255, 0.481), rgba(255, 255, 255, 0.769)),url("../assets/imageedit_3_2303345666.jpg");
+  background-size: cover;
+  background-position: center;
   margin: 0 auto;
   font-family: "Nunito Sans", sans-serif;
   font-size: 3rem;
@@ -48,6 +51,7 @@ h1{
 
 h2{
   margin: 3rem 0 3.5rem 0;
+  font-weight: 500;
 }
 
 .status{
@@ -64,6 +68,7 @@ h2{
 .input{
   width: 40%;
   font-size: 30px;
+  background-color: #e3f2fd;
 }
 
 .button{
